@@ -28,6 +28,100 @@ print("Welcome back to the UW Calculator")
 //: IMPORTANT: If any tests are commented out, you will be graded a zero (0)! You should never be in the habit of eliminating tests to make the code pass.
 //:
 class Calculator {
+    func add (lhs: Int, rhs : Int) -> Int{
+        return lhs + rhs
+    }
+    
+    func add(_ args: [Int]) -> Int{
+        return args.reduce(0,+)
+    }
+    func add(lhs: (x: Int, y: Int), rhs: (x: Int, y: Int)) -> (x: Int, y: Int) {
+        return (x: lhs.x + rhs.x, y: lhs.y + rhs.y)
+    }
+    func add(lhs: [String: Int], rhs: [String: Int]) -> [String: Int]? {
+        guard lhs.keys.contains("x") || lhs.keys.contains("y") || rhs.keys.contains("x") || rhs.keys.contains("y") else {
+               // Both dictionaries are empty or don't contain relevant keys
+            return ["x": 0, "y":0]
+           }
+            let xSum = (lhs["x"] ?? 0) + (rhs["x"] ?? 0)
+            let ySum = (lhs["y"] ?? 0) + (rhs["y"] ?? 0)
+            return ["x": xSum, "y": ySum]
+        }
+
+        // Function to subtract two points
+    func subtract(lhs: [String: Int], rhs: [String: Int]) -> [String: Int] {
+            let xDifference = (lhs["x"] ?? 0) - (rhs["x"] ?? 0)
+            let yDifference = (lhs["y"] ?? 0) - (rhs["y"] ?? 0)
+            return ["x": xDifference, "y": yDifference]
+        }
+    
+    func subtract (lhs: Int, rhs : Int) -> Int{
+        return lhs - rhs
+    }
+    
+    func subtract (_ args: [Int]) -> Int{
+        return args.reduce(0,-)
+    }
+    func subtract(lhs: (x: Int, y: Int), rhs: (x: Int, y: Int)) -> (x: Int, y: Int) {
+        return (x: lhs.x - rhs.x, y: lhs.y - rhs.y)
+    }
+    
+    func multiply (lhs: Int, rhs : Int) -> Int{
+        return lhs * rhs
+    }
+    
+    func multiply (_ args: [Int]) -> Int{
+        // need to start at 1 because that is when things are unchanged.
+        return args.reduce(1,*)
+    }
+    func multiply(lhs: (x: Int, y: Int), rhs: (x: Int, y: Int)) -> (x: Int, y: Int) {
+        return (x: lhs.x * rhs.x, y: lhs.y * rhs.y)
+    }
+    
+    func multiply(lhs: [String: Int], rhs: [String: Int]) -> [String: Int] {
+            let xDifference = (lhs["x"] ?? 0) * (rhs["x"] ?? 0)
+            let yDifference = (lhs["y"] ?? 0) * (rhs["y"] ?? 0)
+            return ["x": xDifference, "y": yDifference]
+    }
+    
+    func divide (lhs: Int, rhs : Int) -> Int{
+        //learn to use a guard and check if its an empty array
+        return lhs / rhs
+    }
+    
+    func divide (_ args: [Int]) -> Int{
+        return args.reduce(0,/)
+    }
+    func divide(lhs: (x: Int, y: Int), rhs: (x: Int, y: Int)) -> (x: Int, y: Int) {
+        return (x: lhs.x / rhs.x, y: lhs.y * rhs.y)
+    }
+    
+    func divide (lhs: [String: Int], rhs: [String: Int]) -> [String: Int] {
+            let xDifference = (lhs["x"] ?? 0) / (rhs["x"] ?? 0)
+            let yDifference = (lhs["y"] ?? 0) / (rhs["y"] ?? 0)
+            return ["x": xDifference, "y": yDifference]
+    }
+    
+    func count(_ arg : [Int]) -> Int {
+        return arg.count
+    }
+    
+    
+    
+    func avg (_ arg : [Int]) -> Int {
+        return (arg.reduce(0, +) / arg.count)
+    }
+    
+    func mathOp(lhs: Int, rhs: Int, op: (Int, Int) -> Int) -> Int {
+           return op(lhs, rhs)
+       }
+    
+    func mathOp(args: [Int], beg: Int, op: (Int, Int) -> Int) -> Int {
+            // Use reduce to combine all elements of the array, starting from 'beg'
+            return args.reduce(beg, op)
+        }
+
+    
 }
 
 //: Don't change the name of this object (`calc`); it's used in all the tests.
@@ -52,7 +146,7 @@ calc.subtract(lhs: 2, rhs: 2) == 0
 calc.multiply(lhs: 2, rhs: 2) == 4
 calc.divide(lhs: 2, rhs: 2) == 1
 
-calc.mathOp(lhs: 5, rhs: 5, op: { (lhs: Int, rhs: Int) -> Int in (lhs + rjs) + (lhs * rhs) }) == 35
+calc.mathOp(lhs: 5, rhs: 5, op: { (lhs: Int, rhs: Int) -> Int in (lhs + rhs) + (lhs * rhs) }) == 35
     // This style is one way of writing an anonymous function
 calc.mathOp(lhs: 10, rhs: -5, op: { ($0 + $1) + ($0 - $1) }) == 20
     // This is the second, more terse, style; either works
@@ -85,3 +179,13 @@ let pd1 = ["x": 5, "y": 5]
 let pd2 = ["x": -4, "y": 4]
 calc.add(lhs: pd1, rhs: pd2) == ["x": 1, "y": 9]
 calc.subtract(lhs: pd1, rhs: pd2) == ["x": 9, "y": 1]
+
+
+
+//Extra Credit:
+calc.multiply(lhs: pd1, rhs: pd2) == ["x": -20, "y": 20]
+calc.multiply(lhs: p3, rhs: p4) == (0, 0)
+calc.add(lhs:[:], rhs:[:]) == ["x": 0, "y": 0]
+
+
+
